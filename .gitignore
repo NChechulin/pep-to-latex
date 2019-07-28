@@ -5,4 +5,7 @@
 *.log
 *.fls
 lib_tests.py
+lib-tests.py
+*.out
+*.gz
 __pycache__/
