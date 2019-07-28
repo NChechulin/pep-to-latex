@@ -4,6 +4,21 @@ class Document:
     self.filename = filename
     self.contents = []
 
+  def append(self, content):
+    self.contents.append(content)
+
+  def stringify(self):
+    data = ''
+
+    packages = ['fontenc', 'tikz', 'textcomp', 'listings', 'inputenc']
+    parameters = [['T1'], [], [], [], ['utf8']]
+
+    for i in range(len(packages)):
+      data += Command('usepackage', argument=packages[i], parameters=parameters[i]).stringify() + '\n'
+    return data
+
+    
+
 
 class Title:
   def __init__(self, title_str):
@@ -36,12 +51,13 @@ class Text:
 
 class Command:
   
-  def __init__(self, command, argument=''):
+  def __init__(self, command, argument='', parameters=[]):
     self.command = command
     self.argument = argument
+    self.parameters = parameters
   
   def stringify(self):
-    return f"""\\{self.command}{'{' + self.argument + '}' if self.argument != '' else ''}"""
+    return f"""\\{self.command}{str(self.parameters).replace("'", "").replace('"', '') if self.parameters != [] else ''}{'{' + self.argument + '}' if self.argument != '' else ''}"""
 
 class BeginEndCommand:
 

@@ -90,6 +90,7 @@ if __name__ == '__main__':
 
     with open(filename + '.tex', 'r') as file:
         data = file.read()
+        data = data.replace('%\n', '\n')
         file.close()
     with open(filename + '.tex', 'w') as file:
         file.write(data)
