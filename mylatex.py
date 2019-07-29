@@ -19,7 +19,8 @@ class Document:
             ['babel', ['english', 'russian']],
             ['amssymb', []],
             ['amsmath', []],
-            ['hyperref', []]
+            ['hyperref', []],
+            ['fancyvrb', []]
         ]
 
         data += Command('documentclass', argument="article",
@@ -28,6 +29,10 @@ class Document:
         for package in packages:
             data += Command('usepackage',
                             argument=package[0], parameters=package[1]).stringify() + '\n'
+        
+        self.contents.insert(0, Command('begin', 'document'))
+        self.append(Command('end', 'document'))
+
         for i in self.contents:
             data += i.stringify() + '\n'
         return data
@@ -116,11 +121,14 @@ class UnorderedList:
             inside_commands.append(Text(item.stringify()))
         return BeginEndCommand(command="itemize", inside_commands=inside_commands).stringify()
 
+
 class Code():
-  def __init__(self, code):
-    self.code = code
-  def stringify(self):
-    return BeginEndCommand("verbatim", [Text(self.code)]).stringify()
+    def __init__(self, code):
+        self.code = code
+
+    def stringify(self):
+      verbatim = BeginEndCommand("Verbatim", [UnformattedText(self.code)], parameters=['samepage=true'])
+      return verbatim.stringify()
 
 class Text:
     def __init__(self, content):
@@ -128,9 +136,18 @@ class Text:
 
     def stringify(self):
         text = self.content
-        # Do some stuff with text
-        text = text.replace('%', '{%}')
+        text = text.replace('^', '$\hat{\phantom{.}}$')
+        text = text.replace('\\', r'\textbackslash ')
+        text = text.replace('%', r'\%')
+        text = text.replace('_', r'\_')
+        text = text.replace('#', r'\#')
         return text
+
+class UnformattedText:
+  def __init__(self, content):
+    self.content = content
+  def stringify(self):
+    return str(self.content)
 
 
 class Command:
