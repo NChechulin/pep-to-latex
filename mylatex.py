@@ -29,7 +29,7 @@ class Document:
         for package in packages:
             data += Command('usepackage',
                             argument=package[0], parameters=package[1]).stringify() + '\n'
-        
+
         self.contents.insert(0, Command('begin', 'document'))
         self.append(Command('end', 'document'))
 
@@ -99,11 +99,9 @@ class Math:
 
     def stringify(self):
         res = self.math_command
-        res = "$" + res
-        res += "$"
+        res = "$" + res + "$"
         if self.centered:
-            res = "$" + res
-            res += "$"
+            res = "$" + res + "$"
         return res
 
 
@@ -127,8 +125,10 @@ class Code():
         self.code = code
 
     def stringify(self):
-      verbatim = BeginEndCommand("Verbatim", [UnformattedText(self.code)], parameters=['samepage=true'])
-      return verbatim.stringify()
+        verbatim = BeginEndCommand(
+            "Verbatim", [UnformattedText(self.code)], parameters=['samepage=true'])
+        return verbatim.stringify()
+
 
 class Text:
     def __init__(self, content):
@@ -143,11 +143,13 @@ class Text:
         text = text.replace('#', r'\#')
         return text
 
+
 class UnformattedText:
-  def __init__(self, content):
-    self.content = content
-  def stringify(self):
-    return str(self.content)
+    def __init__(self, content):
+        self.content = content
+
+    def stringify(self):
+        return str(self.content)
 
 
 class Command:

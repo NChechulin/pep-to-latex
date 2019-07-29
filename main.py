@@ -11,9 +11,11 @@ def add_section(section_name):
     global doc
     doc.create(Section(section_name, numbering=False))
 
+
 def add_subsection(subsection_name):
     global doc
     doc.append(Subsection(subsection_name))
+
 
 def init_soup(url):
     global soup
@@ -29,6 +31,7 @@ def get_sections():
 def get_section_title(section_div):
     a_tag = section_div.find('a', {'class': 'toc-backref'})
     return a_tag.text
+
 
 def parse_child(child):
     global doc
@@ -59,7 +62,7 @@ def parse_child(child):
                 parse_child(c)
         else:
             doc.append(SubSection(title))
-            
+
             for c in children:
                 parse_child(c)
 
@@ -68,7 +71,6 @@ def parse_child(child):
 
     elif child.name == 'pre' and child.has_attr('class') and child['class'][0] == 'literal-block':
         doc.append(Code(child.text))
-            
 
 
 if __name__ == '__main__':
