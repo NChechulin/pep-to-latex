@@ -4,7 +4,7 @@
 
 This project is used for translating Python PEPs into LaTeX code, which can be then compiled into a PDF, if it's needed.
 
-The project was written by [me](https://github.com/NChechulin/) and [fertilewaif](https://github.com/fertilewaif) during "Slon" summer camp.
+The project was written by [me](https://github.com/NChechulin/) and [fertilewaif](https://github.com/fertilewaif) during "Slon 2019" summer camp.
 
 ## Structure
 
