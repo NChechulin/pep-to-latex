@@ -74,11 +74,12 @@ def parse_child(child):
 
 
 if __name__ == '__main__':
-    filename = 'pep8'
+    pep_number = input('Input PEP number (e.g 8): ')
+    filename = f'pep-{pep_number.zfill(4)}'
 
     doc = Document(filename + '.tex', filename)
 
-    init_soup('https://www.python.org/dev/peps/pep-0008/')
+    init_soup(f'https://www.python.org/dev/peps/{filename}/')
     article = soup.find('article')
 
     for child in article.findChildren(recursive=False):
