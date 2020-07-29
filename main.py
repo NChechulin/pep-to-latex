@@ -87,3 +87,5 @@ if __name__ == '__main__':
 
     with open(filename + '.tex', 'w') as f:
         print(doc.stringify(), file=f)
+
+    print(f'Done! Written data to {filename}.tex')
